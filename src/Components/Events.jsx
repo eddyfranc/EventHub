@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from './Navbar'; 
 
 const handleClick=()=>{
     console.log("buttonclicked")
@@ -64,8 +63,11 @@ function Events() {
               <label className="flex flex-col w-full">
                 <select className="h-14 rounded-lg bg-[#e7edf4] p-4 text-base">
                   <option>Select a category</option>
-                  <option>Free</option>
-                  <option>Paid</option>
+                  <option>Music</option>
+                  <option>Sports</option>
+                  <option>Arts&Culture</option>
+                  <option>Technology</option>
+                  <option>Business</option>
                 </select>
               </label>
             </div>

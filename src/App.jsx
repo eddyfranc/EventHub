@@ -1,11 +1,13 @@
-import React from "react";
-import Events from "./Components/Events";
+
 import "./index.css";
+import Events from "./Components/Events"
+
 
 function App() {
   return (
     <>
-    <Events />
+  
+    <Events/>
     </>
   );
 }
