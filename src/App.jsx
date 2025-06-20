@@ -1,24 +1,24 @@
 import "./index.css";
-import HomePage from "./Components/HomePage";
-// import MainNav from "./Components/MainNav";
+import MainNav from "./Components/MainNav";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./Components/Navbar";
-import Footer from "./Components/Footer";
-
-
+import Herosection from "./Components/Herosection";
+import Signup from "./Components/Signup";
+import SignIn
 
 
 function App() {
   return (
     <>
      <BrowserRouter>
-     <Navbar/>
+     <MainNav/>
      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/footer" element={<Footer />}/>
 
+       <Route path="/" element={<Herosection />} />
+       <Route path="/signup" element={<Signup />} />
+       <Route path="/signup" element={<Signup />} />
+       
      </Routes>
-     
+
      </BrowserRouter>
     </>
   );

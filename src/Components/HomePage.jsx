@@ -1,26 +1,21 @@
 import { useState } from "react";
+import axios from 'axios'
+
+
+
 function HomePage() {
+
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
 
-  const categories = [
-    "Music",
-    "Arts & Culture",
-    "Sports",
-    "Food & Drink",
-    "Technology",
-    "Business",
-  ];
+  const categories = [ "Music", "Arts & Culture", "Sports", "Food & Drink", "Technology", "Business",];
 
-  const events = [
-    {
-      title: "Indie Rock Night",
-      category: "Music",
-      date: "Jul 16, 2025",
-      location: "The Roxy, London",
+  const events = [ { title: "Indie Rock Night", category: "Music", date: "Jul 16, 2025", location: "The Roxy, London",
       imageUrl:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuAFRfUHMC6S4D08dF_B6uICVvRg2_g9V--jDMMEOihV9PwvCRS7Bz75tS64NMYL5JHg4S2QRr_AojzWM6tzOdCKysoxOsyS0Avjwe1GZBcPOd1tNkHoy9qHeY5zGhNDB_ROdRoG7QSqtjI1RP3kvrCkHBuQpO6AlWWzZIbjC6mEL5CT5DLFe25EQLBvoQPdeAVgqxTylm2Nw2pgZ8kMlLPAP4yaznaXi8LyvXc1Pz2DKFp_R1fWKvO_E-kx_0YvgwIvshRHN-wGXBZx",
     },
+
+    
     {
       title: "Modern Art Symposium",
       category: "Arts & Culture",
@@ -57,6 +52,11 @@ function HomePage() {
       : true;
     return matchesSearch && matchesCategory;
   });
+
+
+  axios.get('https://www.eventbriteapi.com/v3/users/me/?token=VP5DL2P4TIULES5JXKGJ')
+  .then(response => {console.log(response.data)})
+  .catch(error => {console.log(error)})
 
   return (
     <div className="px-4 md:px-16 py-5 flex justify-center">
