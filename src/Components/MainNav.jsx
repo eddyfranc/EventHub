@@ -1,136 +1,140 @@
+// import { Link } from "react-router-dom";
+// import { ChevronDown, Calendar } from "lucide-react";
+// import Event from "@mui/icons-material/Event";
+
+// function MainNav() {
+//   return (
+//     <nav className="w-full flex items-center justify-between px-6 py-3 shadow-sm bg-white sticky top-0 z-50)">
+//       <div className="flex items-center gap-4">
+//         <Link to="/" className="flex items-center text-xl font-bold text-teal-500">
+//           <Event className="text-2xl" />
+//           <div className="ml-1 text-sm text-black">EVENTHUB</div>
+//         </Link>
+//         <div className="border-l h-6 mx-4" />
+
+//         <div className="flex items-center gap-6 text-sm font-medium">
+//           <Link to="/features" className="hover:text-green-600">Features</Link>
+//           <div className="flex items-center hover:text-green-600 cursor-pointer">
+//             <Link to="/industry">Industry</Link>
+//             <ChevronDown className="w-4 h-4 ml-1" />
+//           </div>
+//           <Link to="/enterprise" className="hover:text-green-600">Enterprise</Link>
+//           <Link to="/explore" className="text-green-600 font-semibold">Explore Events</Link>
+//         </div>
+//       </div>
+
+//       <div className="flex items-center gap-4">
+//         <Link
+//           to="/login"
+//           className="font-semibold hover:text-green-600 flex items-center"
+//         >
+//           Greetings! Sign in
+//           <ChevronDown className="w-4 h-4 ml-1" />
+//         </Link>
+
+//         <Link
+//           to="/create"
+//           className="bg-orange-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600"
+//         >
+//           <Calendar className="w-4 h-4 mr-2" />
+//           Create Event
+//         </Link>
+//       </div>
+//     </nav>
+//   );
+// }
+
+// export default MainNav;
+
+
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { ChevronDown, Calendar } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ChevronDown, Calendar, ArrowUpRight } from "lucide-react";
 import Event from "@mui/icons-material/Event";
 
 function MainNav() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [triggerRect, setTriggerRect] = useState(null);
-  const signInTriggerRef = useRef(null); // Ref for the "Greetings! Sign in" element
-  const modalContentRef = useRef(null); // Ref for the modal's content div
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchRef = useRef(null);
 
+  const trendingSearches = [
+    "tech events",
+    "free events in nairobi",
+    "fully funded international conferences for 2025",
+    "free events",
+    "singles party",
+  ];
 
-
-  const navigate = useNavigate(); 
-
-   const handleSignUpRedirect = () => {
-    handleCloseModal(); // Close the modal first
-    navigate('/signup'); // Navigate to the signup page
-  };
-
-  const handleSignInClick = (event) => {
-    event.preventDefault();
-    if (signInTriggerRef.current) {
-      setTriggerRect(signInTriggerRef.current.getBoundingClientRect());
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsSearchFocused(false);
+      }
     }
-    setIsModalOpen((prev) => !prev); // Toggle modal visibility
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  // Close modal if escape key is pressed
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        handleCloseModal();
-      }
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  // Close modal when clicking outside of it (excluding the trigger and modal content)
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        isModalOpen && // Only if modal is open
-        signInTriggerRef.current &&
-        !signInTriggerRef.current.contains(event.target) && // Click was not on the trigger
-        modalContentRef.current &&
-        !modalContentRef.current.contains(event.target) // Click was not inside the modal content
-      ) {
-        handleCloseModal();
-      }
-    };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isModalOpen]);
-
-  // Calculate modal position dynamically based on the triggerRect
-  const modalTop = triggerRect ? triggerRect.bottom + 10 : 60;
-  const modalRight = triggerRect
-    ? window.innerWidth - triggerRect.right + 20
-    : 20;
-
-  const modalStyle = triggerRect
-    ? {
-        position: "absolute",
-        top: `${triggerRect.bottom + 10}px`,
-        right: `${window.innerWidth - triggerRect.right}px`, // Align right edge of modal with right edge of trigger
-        // Adjust left/transform if you need to fine-tune the arrow position
-      }
-    : {
-        // Default styles if triggerRect is not available yet (e.g., on initial render)
-        position: "absolute",
-        top: "60px",
-        right: "20px",
-      };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <nav className="w-full flex items-center justify-between px-6 py-3 shadow-sm bg-white relative z-40">
+    <nav className="w-full flex items-center justify-between px-6 py-3 shadow-sm bg-white sticky top-0 z-50">
+      {/* Left - Logo and Links */}
       <div className="flex items-center gap-4">
-        <Link
-          to="/"
-          className="flex items-center text-xl font-bold text-teal-500"
-        >
-          <span className="text-2xl font-extrabold">
-            <Event />
-          </span>
-          <div className="flex flex-col ml-1 text-left">
-            <span className="text-sm text-black">EVENTHUB</span>
-          </div>
+        <Link to="/" className="flex items-center text-xl font-bold text-orange-500">
+          <Event className="text-2xl" />
+          <div className="ml-1 text-sm text-black">EVENTHUB</div>
         </Link>
         <div className="border-l h-6 mx-4" />
-        {/* Links */}
         <div className="flex items-center gap-6 text-sm font-medium">
-          <Link to="/features" className="hover:text-green-600">
-            Features
-          </Link>
-          <div className="flex items-center hover:text-green-600 cursor-pointer">
+          <Link to="/features" className="hover:text-green-700">Features</Link>
+          {/* <div className="flex items-center hover:text-green-600 cursor-pointer">
             <Link to="/industry">Industry</Link>
             <ChevronDown className="w-4 h-4 ml-1" />
-          </div>
-          <Link to="/enterprise" className="hover:text-green-600">
-            Enterprise
-          </Link>
-          <Link to="/explore" className="text-green-600 font-semibold">
-            Explore Events
-          </Link>
+          </div> */}
+          <Link to="/enterprise" className="hover:text-green-700">Enterprise</Link>
+          <Link to="/explore" className=" hover:text-green-700 font-semibold">Explore Events</Link>
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="flex items-center font-semibold hover:text-green-600 cursor-pointer relative">
-          {" "}
-          <Link
-            to="#" // Prevent actual navigation
-            ref={signInTriggerRef} // Attach the ref here
-            onClick={handleSignInClick}
-            className="flex items-center" // Ensure link behaves like button for click area
-          >
-            Greetings! Sign in
-            <ChevronDown className="w-4 h-4 ml-1" />{" "}
-            {/* Keep ChevronDown with the link */}
-          </Link>
+      {/* Right - Search, Sign In, Create Event */}
+      <div className="relative flex items-center gap-4" ref={searchRef}>
+        {/* Search Input */}
+        <div className="relative w-64">
+          <input
+            type="text"
+            placeholder="Search for events"
+            onFocus={() => setIsSearchFocused(true)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:outline-none transition text-sm"
+          />
+          {/* Dropdown */}
+          {isSearchFocused && (
+            <div className="absolute top-full left-0 w-full bg-white border border-gray-200 shadow-lg rounded-b-md mt-1 z-40">
+              <div className="px-4 py-2 font-semibold text-gray-700 border-b">Trending Searches</div>
+              <ul className="py-2">
+                {trendingSearches.map((item, index) => (
+                  <li
+                    key={index}
+                    className="px-4 py-2 text-sm text-gray-700 hover:bg-orange-100 cursor-pointer flex items-center gap-2"
+                  >
+                    <ArrowUpRight className="w-4 h-4 text-orange-500" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
+        {/* Sign In */}
+        <Link
+          to="/login"
+          className="font-semibold hover:text-green-600 flex items-center"
+        >
+          Greetings! Sign in
+          <ChevronDown className="w-4 h-4 ml-1" />
+        </Link>
+
+        {/* Create Event */}
         <Link
           to="/create"
           className="bg-orange-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600"
@@ -139,37 +143,6 @@ function MainNav() {
           Create Event
         </Link>
       </div>
-
-      {/* The Modal Content (conditionally rendered) */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-end items-start z-50 pt-[calc(3rem_+_10px)]" // Adjusted pt-value based on navbar height (px-6 py-3 approx 3rem)
-          onClick={handleCloseModal} // Close modal when clicking on the overlay
-        >
-          <div
-            ref={modalContentRef}
-            className="bg-white p-6 rounded-lg shadow-xl text-center w-72 flex flex-col gap-4 relative"
-            style={modalStyle} // Apply dynamic positioning
-            onClick={(e) => e.stopPropagation()} // Prevent clicks inside modal from closing it
-          >
-            {/* Triangle arrow */}
-            <div
-              className="absolute w-0 h-0 border-l-[10px] border-r-[10px] border-b-[10px] border-l-transparent border-r-transparent border-b-white"
-              style={{ top: "-10px", right: "30px" }}
-            ></div>
-
-            <button className="bg-orange-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-md text-lg transition-colors duration-300">
-              Sign in
-            </button>
-            <p className="text-sm text-gray-600">
-              New here?{" "}
-              <a href="#" className="text-orange-500 font-bold hover:underline" onClick={handleSignUpRedirect}>
-                Sign up
-              </a>
-            </p>
-          </div>
-        </div>
-      )}
     </nav>
   );
 }
