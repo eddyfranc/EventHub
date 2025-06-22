@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../firebase"; // ✅ Ensure correct path to your firebase.js
+import { auth } from "../firebase";
 
 function CreateEvent() {
   const navigate = useNavigate();
