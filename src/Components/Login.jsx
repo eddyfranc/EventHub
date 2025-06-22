@@ -11,65 +11,83 @@ function Login() {
   const modalRef = useRef(null);
   const [isNewUser, setIsNewUser] = useState(false);
   const [isFading, setIsFading] = useState(false);
-
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  // Detect click outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
-        setIsFading(true); // Trigger fade-out animation
-        setTimeout(() => {
-          navigate("/"); // Navigate after fade completes
-        }, 300); // Delay to allow fade-out to finish
+        setIsFading(true);
+        setTimeout(() => navigate("/"), 300);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [navigate]);
 
+  useEffect(() => {
+    if (success) {
+      const timeout = setTimeout(() => setSuccess(""), 4000);
+      return () => clearTimeout(timeout);
+    }
+  }, [success]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      let userCredential;
-      if (isNewUser) {
-        userCredential = await createUserWithEmailAndPassword(
-          auth,
-          formData.email,
-          formData.password
-        );
-        alert("Signed up successfully!");
-      } else {
-        userCredential = await signInWithEmailAndPassword(
-          auth,
-          formData.email,
-          formData.password
-        );
-        alert("Logged in successfully!");
-      }
+    setError("");
+    setSuccess("");
 
-      console.log("User:", userCredential.user);
-      navigate("/"); // Redirect to home
+    try {
+      if (isNewUser) {
+        await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        setSuccess("Account created successfully. You can now log in.");
+        setIsNewUser(false);
+      } else {
+        await signInWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        setSuccess("Logged in successfully! Redirecting...");
+        setTimeout(() => navigate("/"), 1500);
+      }
     } catch (err) {
-      alert(err.message);
+      if (err.code === "auth/user-not-found") {
+        setError("No account found. Please sign up first.");
+      } else if (err.code === "auth/wrong-password") {
+        setError("Incorrect password. Please try again.");
+      } else if (err.code === "auth/email-already-in-use") {
+        setError("This email is already in use. Please log in.");
+        setIsNewUser(false);
+      } else {
+        setError(err.message);
+      }
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
+    <div
+      className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
       style={{ backgroundImage: "url('/Images/background signup.png')" }}
     >
       <div
         ref={modalRef}
-        className={`bg-white rounded-2xl shadow-lg p-8 w-full max-w-md
-    transition-all duration-500 ease-in-out 
-    ${isFading ? "opacity-0 scale-95" : "opacity-100 scale-100"
-                         
+        className={`bg-white rounded-2xl shadow-lg p-8 w-full max-w-md transition-all duration-500 ease-in-out ${
+          isFading ? "opacity-0 scale-95" : "opacity-100 scale-100"
         }`}
       >
         <h2 className="text-3xl font-bold text-center mb-6 text-orange-500">
           {isNewUser ? "Sign Up" : "Login"}
         </h2>
+
+        {error && (
+          <p className="text-red-600 text-sm mb-4 text-center">{error}</p>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <input
@@ -99,11 +117,22 @@ function Login() {
           >
             {isNewUser ? "Sign Up" : "Login"}
           </button>
+
+          {/* Success message below button */}
+          {success && (
+            <div className="mt-3 text-green-600 text-sm text-center">
+              {success}
+            </div>
+          )}
         </form>
 
         <div className="mt-6 text-center">
           <button
-            onClick={() => setIsNewUser(!isNewUser)}
+            onClick={() => {
+              setError("");
+              setSuccess("");
+              setIsNewUser(!isNewUser);
+            }}
             className="text-orange-500 hover:underline font-medium"
           >
             {isNewUser
