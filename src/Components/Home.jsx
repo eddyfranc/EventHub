@@ -17,37 +17,37 @@ const staticEvents = [
     title: "Global Music Fest",
     date: "2025-07-20",
     category: "Music",
-    image: "public/Images/kids.png",
+    image: "/Images/music.png",
   },
   {
     title: "Startup Growth Summit",
     date: "2025-08-05",
     category: "Business",
-    image: "https://source.unsplash.com/600x400/?conference",
+    image: "/Images/summit.png",
   },
   {
     title: "TechXpo 2025",
     date: "2025-09-12",
     category: "Technology",
-    image: "https://source.unsplash.com/600x400/?technology",
+    image: "/Images/techxpo.png",
   },
   {
     title: "Culinary Arts Festival",
     date: "2025-10-01",
     category: "Food",
-    image: "https://source.unsplash.com/600x400/?food-festival",
+    image: "/Images/culinary.png",
   },
   {
     title: "Digital Art Exhibition",
     date: "2025-11-03",
     category: "Art",
-    image: "https://source.unsplash.com/600x400/?art-exhibition",
+    image: "/Images/digital.png",
   },
   {
     title: "Basketball Championship",
     date: "2025-12-10",
     category: "Sports",
-    image: "https://source.unsplash.com/600x400/?basketball-game",
+    image: "/Images/basketball.png",
   },
 ];
 
@@ -108,6 +108,9 @@ function Home() {
     });
 
     setAllEvents(upcomingEvents);
+
+    // ✅ Store combined events into localStorage for Explore page
+    localStorage.setItem("explore_events", JSON.stringify(upcomingEvents));
   }, []);
 
   return (
@@ -161,7 +164,7 @@ function Home() {
                 <h3 className="text-xl font-semibold mb-2 text-gray-900">{event.title}</h3>
                 <p className="flex items-center gap-2 text-gray-600 text-sm mb-1">📅 {event.date}</p>
                 <p className="text-sm font-medium text-orange-600 mb-4">{event.category}</p>
-                <a href="#" className="inline-flex items-center text-teal-600 hover:text-teal-800 font-semibold transition group">
+                <a href="#" className="inline-flex items-center text-teal-600 hover:text-teal-700 font-semibold transition group " onClick={() => navigate(`/eventdetails/${index}`)}> 
                   Learn More →
                 </a>
               </div>
@@ -196,7 +199,7 @@ function Home() {
                 ))}
               </div>
               <p className="text-gray-700 italic text-base">"{text}"</p>
-              <footer className="mt-4 text-sm font-semibold text-gray-600">— User {i + 1}</footer>
+              <footer className="mt-4 text-sm font-semibold text-gray-600">-User {i + 1}</footer>
             </motion.blockquote>
           ))}
         </div>
@@ -205,7 +208,7 @@ function Home() {
       {/* Footer Marquee */}
       <footer className="sticky bottom-0 z-40">
         <Marquee gradient={false} speed={60} className="bg-green-700 text-white py-3 text-sm font-medium shadow-lg">
-          🚀 New: Real-time analytics dashboard | 🎟️ Secure ticketing now live | 🤖 AI-driven event promotion tools available | 💬 Community chatrooms for hosts | ✨ Optimized for mobile experience
+          🚀 New: Real-time analytics dashboard coming soon | 🎟️ Your go to go platform | 🤖 AI-driven event promotion tools available coming soon | 💬  24/7 Community chatrooms for hosts | ✨ Optimized for mobile experience
         </Marquee>
       </footer>
     </div>
@@ -213,4 +216,7 @@ function Home() {
 }
 
 export default Home;
+
+
+
 

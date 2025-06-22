@@ -31,7 +31,7 @@ function AppWrapper() {
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CreateEvent />} />
         <Route path="/eventdetails" element={<EventDetails />} />
-        <Route path="/event-details/:id" element={<EventDetails />} />
+        <Route path="/eventdetails/:id" element={<EventDetails />} />
         <Route path="/features" element={<Features />} />
         <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/enterprisefeatures" element={<EnterpriseFeatures />} />
