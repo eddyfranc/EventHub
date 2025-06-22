@@ -1,52 +1,3 @@
-// import { Link } from "react-router-dom";
-// import { ChevronDown, Calendar } from "lucide-react";
-// import Event from "@mui/icons-material/Event";
-
-// function MainNav() {
-//   return (
-//     <nav className="w-full flex items-center justify-between px-6 py-3 shadow-sm bg-white sticky top-0 z-50)">
-//       <div className="flex items-center gap-4">
-//         <Link to="/" className="flex items-center text-xl font-bold text-teal-500">
-//           <Event className="text-2xl" />
-//           <div className="ml-1 text-sm text-black">EVENTHUB</div>
-//         </Link>
-//         <div className="border-l h-6 mx-4" />
-
-//         <div className="flex items-center gap-6 text-sm font-medium">
-//           <Link to="/features" className="hover:text-green-600">Features</Link>
-//           <div className="flex items-center hover:text-green-600 cursor-pointer">
-//             <Link to="/industry">Industry</Link>
-//             <ChevronDown className="w-4 h-4 ml-1" />
-//           </div>
-//           <Link to="/enterprise" className="hover:text-green-600">Enterprise</Link>
-//           <Link to="/explore" className="text-green-600 font-semibold">Explore Events</Link>
-//         </div>
-//       </div>
-
-//       <div className="flex items-center gap-4">
-//         <Link
-//           to="/login"
-//           className="font-semibold hover:text-green-600 flex items-center"
-//         >
-//           Greetings! Sign in
-//           <ChevronDown className="w-4 h-4 ml-1" />
-//         </Link>
-
-//         <Link
-//           to="/create"
-//           className="bg-orange-500 text-white px-4 py-2 rounded flex items-center hover:bg-green-600"
-//         >
-//           <Calendar className="w-4 h-4 mr-2" />
-//           Create Event
-//         </Link>
-//       </div>
-//     </nav>
-//   );
-// }
-
-// export default MainNav;
-
-
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ChevronDown, Calendar, ArrowUpRight } from "lucide-react";
@@ -87,10 +38,6 @@ function MainNav() {
         <div className="border-l h-6 mx-4" />
         <div className="flex items-center gap-6 text-sm font-medium">
           <Link to="/features" className="hover:text-green-700">Features</Link>
-          {/* <div className="flex items-center hover:text-green-600 cursor-pointer">
-            <Link to="/industry">Industry</Link>
-            <ChevronDown className="w-4 h-4 ml-1" />
-          </div> */}
           <Link to="/enterprise" className="hover:text-green-700">Enterprise</Link>
           <Link to="/explore" className=" hover:text-green-700 font-semibold">Explore Events</Link>
         </div>

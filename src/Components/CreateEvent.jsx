@@ -1,6 +1,6 @@
+
 // import { useState } from "react";
 // import { Link } from 'react-router-dom';
-
 
 // function CreateEvent() {
 //   const [eventData, setEventData] = useState({
@@ -12,7 +12,7 @@
 //     duration: "",
 //     endTime: "",
 //     timezone: "Africa/Nairobi",
-//     currency: "KES",
+//     currency: "Ksh",
 //     visibility: true,
 //     categories: [],
 //     eventImage: null,
@@ -22,12 +22,17 @@
 
 //   const handleChange = (e) => {
 //     const { name, value, type, checked } = e.target;
-//     if (type === "checkbox") {
+//     if (type === "checkbox" && name === "categories") {
 //       setEventData((prev) => ({
 //         ...prev,
 //         categories: checked
 //           ? [...prev.categories, value]
 //           : prev.categories.filter((c) => c !== value),
+//       }));
+//     } else if (type === "checkbox") {
+//       setEventData((prev) => ({
+//         ...prev,
+//         [name]: checked,
 //       }));
 //     } else {
 //       setEventData((prev) => ({ ...prev, [name]: value }));
@@ -51,38 +56,85 @@
 //     }
 //   };
 
+//   const isFormValid = () => {
+//     const {
+//       name,
+//       type,
+//       venue,
+//       startDate,
+//       startTime,
+//       duration,
+//       endTime,
+//       timezone,
+//       currency,
+//       description,
+//       categories,
+//       eventImage,
+//     } = eventData;
+
+//     return (
+//       name &&
+//       type &&
+//       venue &&
+//       startDate &&
+//       startTime &&
+//       duration &&
+//       endTime &&
+//       timezone &&
+//       currency &&
+//       description &&
+//       categories.length > 0 &&
+//       eventImage
+//     );
+//   };
+
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
-//     console.log("Event created:", eventData);
-//     alert("Event created (check console for data)");
-//     // In a real application, you would typically upload eventData.eventImage to a server here.
+
+//     if (!isFormValid()) {
+//       alert("Please fill in all required fields before creating the event.");
+//       return;
+//     }
+
+//     const dataToStore = {
+//       ...eventData,
+//       eventImagePreview: undefined,
+//     };
+
+//     const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
+//     existingEvents.push(dataToStore);
+//     localStorage.setItem("events", JSON.stringify(existingEvents));
+
+//     alert("Event created and stored in localStorage!");
+//     console.log("Stored event:", dataToStore);
+
+//     setEventData({
+//       name: "",
+//       type: "venue",
+//       venue: "",
+//       startDate: "",
+//       startTime: "",
+//       duration: "",
+//       endTime: "",
+//       timezone: "Africa/Nairobi",
+//       currency: "Ksh",
+//       visibility: true,
+//       categories: [],
+//       eventImage: null,
+//       eventImagePreview: "",
+//       description: "",
+//     });
 //   };
 
 //   const categories = [
-//     "Arts",
-//     "Business",
-//     "Coaching and Consulting",
-//     "Community and Culture",
-//     "Education and Training",
-//     "Entrepreneurship",
-//     "Family and Friends",
-//     "Fashion and Beauty",
-//     "Film and Entertainment",
-//     "Food and Drink",
-//     "Government and Politics",
-//     "Health and Wellbeing",
-//     "Hobbies and Interest",
-//     "Music and Theater",
-//     "Others",
-//     "Religion and Spirituality",
-//     "Science and Technology",
-//     "Sports and Fitness",
-//     "Travel and Outdoor",
-//     "Visual Arts",
+//     "Arts", "Business", "Coaching and Consulting", "Community and Culture", "Education and Training",
+//     "Entrepreneurship", "Family and Friends", "Fashion and Beauty", "Film and Entertainment", "Food and Drink",
+//     "Government and Politics", "Health and Wellbeing", "Hobbies and Interest", "Music and Theater", "Others",
+//     "Religion and Spirituality", "Science and Technology", "Sports and Fitness", "Travel and Outdoor", "Visual Arts",
 //   ];
 
 //   return (
-//     <div className="min-h-screen bg-gray-50 flex flex-col"> {/* Added flex flex-col to enable sticky footer */}
+//     <div className="min-h-screen bg-gray-50 flex flex-col">
 //       <div className="bg-white py-4 px-8 border-b border-gray-200">
 //         <div className="max-w-4xl mx-auto flex items-center">
 //           <Link
@@ -108,15 +160,14 @@
 //         </div>
 //       </div>
 
-//       {/* Main Content Area form */}
-//       <div className="flex-grow flex justify-center items-start py-8 px-4"> 
+//       <div className="flex-grow flex justify-center items-start py-8 px-4">
 //         <div className="w-full max-w-4xl">
 //           <form
 //             onSubmit={handleSubmit}
-//             className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-8 rounded shadow "
+//             className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-8 rounded shadow"
 //           >
 
-//              <div className="col-span-2">
+//             <div className="col-span-2">
 //               <label className="block font-semibold mb-1">Event name</label>
 //               <input
 //                 type="text"
@@ -127,7 +178,7 @@
 //                 className="w-full border border-gray-300 p-3 rounded"
 //               />
 //             </div>
-//             {/* Description Section */}
+
 //             <div className="col-span-2">
 //               <label className="block font-semibold mb-1">Description</label>
 //               <textarea
@@ -140,7 +191,6 @@
 //               ></textarea>
 //             </div>
 
-//             {/* Images Section */}
 //             <div className="col-span-2">
 //               <label className="block font-semibold mb-3">Images</label>
 //               <div
@@ -178,8 +228,6 @@
 //               </div>
 //             </div>
 
-//             {/* Rest of the form fields */}
-
 //             <div>
 //               <label className="block font-semibold mb-1">Event type</label>
 //               <select
@@ -201,7 +249,7 @@
 //                 name="venue"
 //                 value={eventData.venue}
 //                 onChange={handleChange}
-//                 placeholder="Entername"
+//                 placeholder="Enter name"
 //                 className="w-full border border-gray-300 p-3 rounded"
 //               />
 //             </div>
@@ -278,33 +326,27 @@
 //             <div className="col-span-2">
 //               <label className="block font-semibold mb-1">Event visibility</label>
 //               <p className="text-sm text-gray-600 mb-2">
-//                 We may display your event on our explore page to increase
-//                 discoverability if it meets publishing guidelines.
+//                 We may display your event on our explore page to increase discoverability if it meets publishing guidelines.
 //               </p>
 //               <label className="inline-flex items-center space-x-2">
 //                 <input
 //                   type="checkbox"
+//                   name="visibility"
 //                   checked={eventData.visibility}
-//                   onChange={() =>
-//                     setEventData((prev) => ({
-//                       ...prev,
-//                       visibility: !prev.visibility,
-//                     }))
-//                   }
+//                   onChange={handleChange}
 //                 />
 //                 <span>Make my event discoverable</span>
 //               </label>
 //             </div>
 
 //             <div className="col-span-2">
-//               <label className="block font-semibold mb-1">
-//                 Choose event categories
-//               </label>
+//               <label className="block font-semibold mb-1">Choose event categories</label>
 //               <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-48 overflow-y-auto p-2 border border-gray-200 rounded">
 //                 {categories.map((cat) => (
 //                   <label key={cat} className="flex items-center gap-2 text-sm">
 //                     <input
 //                       type="checkbox"
+//                       name="categories"
 //                       value={cat}
 //                       checked={eventData.categories.includes(cat)}
 //                       onChange={handleChange}
@@ -318,8 +360,7 @@
 //         </div>
 //       </div>
 
-//       {/* Action Buttons Section (Footer) */}
-//       <div className="bg-white py-4 px-8 border-t border-gray-200 mt-auto"> 
+//       <div className="bg-white py-4 px-8 border-t border-gray-200 mt-auto">
 //         <div className="max-w-4xl mx-auto flex justify-between">
 //           <button
 //             type="button"
@@ -329,9 +370,9 @@
 //             Cancel
 //           </button>
 //           <button
-//             type="submit" 
-//             onClick={handleSubmit} 
-//             className="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-green-600" 
+//             type="submit"
+//             onClick={handleSubmit}
+//             className="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-green-600"
 //           >
 //             Create
 //           </button>
@@ -342,6 +383,9 @@
 // }
 
 // export default CreateEvent;
+
+
+
 import { useState } from "react";
 import { Link } from 'react-router-dom';
 
@@ -355,7 +399,7 @@ function CreateEvent() {
     duration: "",
     endTime: "",
     timezone: "Africa/Nairobi",
-    currency: "KES",
+    currency: "Ksh",
     visibility: true,
     categories: [],
     eventImage: null,
@@ -439,17 +483,18 @@ function CreateEvent() {
       return;
     }
 
-    const dataToStore = {
+    const newEvent = {
       ...eventData,
-      eventImagePreview: undefined,
+      id: Date.now(),
+      createdAt: new Date().toISOString(),
     };
 
     const existingEvents = JSON.parse(localStorage.getItem("events")) || [];
-    existingEvents.push(dataToStore);
+    existingEvents.push(newEvent);
     localStorage.setItem("events", JSON.stringify(existingEvents));
 
     alert("Event created and stored in localStorage!");
-    console.log("Stored event:", dataToStore);
+    console.log("Stored event:", newEvent);
 
     setEventData({
       name: "",
@@ -460,7 +505,7 @@ function CreateEvent() {
       duration: "",
       endTime: "",
       timezone: "Africa/Nairobi",
-      currency: "KES",
+      currency: "Ksh",
       visibility: true,
       categories: [],
       eventImage: null,
@@ -498,7 +543,7 @@ function CreateEvent() {
                 d="M10 19l-7-7m0 0l7-7m-7 7h18"
               />
             </svg>
-            <span className="text-lg font-semibold text-orange-500 sticky top-0 z-50">Create New Event</span>
+            <span className="text-lg font-semibold text-orange-500">Create New Event</span>
           </Link>
         </div>
       </div>
@@ -509,7 +554,6 @@ function CreateEvent() {
             onSubmit={handleSubmit}
             className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-8 rounded shadow"
           >
-
             <div className="col-span-2">
               <label className="block font-semibold mb-1">Event name</label>
               <input
@@ -536,10 +580,7 @@ function CreateEvent() {
 
             <div className="col-span-2">
               <label className="block font-semibold mb-3">Images</label>
-              <div
-                className="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center text-center"
-                style={{ minHeight: "200px" }}
-              >
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 flex flex-col items-center justify-center text-center" style={{ minHeight: "200px" }}>
                 {eventData.eventImagePreview ? (
                   <img
                     src={eventData.eventImagePreview}
@@ -549,16 +590,10 @@ function CreateEvent() {
                 ) : (
                   <>
                     <p className="text-gray-700 font-semibold mb-2">Add an image</p>
-                    <p className="text-gray-500 text-sm mb-4">
-                      Recommended size: 1920x1080px
-                    </p>
+                    <p className="text-gray-500 text-sm mb-4">Recommended size: 1920x1080px</p>
                   </>
                 )}
-
-                <label
-                  htmlFor="upload-image-input"
-                  className="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-green-600 cursor-pointer"
-                >
+                <label htmlFor="upload-image-input" className="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-green-600 cursor-pointer">
                   Upload image
                 </label>
                 <input
@@ -668,9 +703,7 @@ function CreateEvent() {
 
             <div className="col-span-2">
               <label className="block font-semibold mb-1">Event visibility</label>
-              <p className="text-sm text-gray-600 mb-2">
-                We may display your event on our explore page to increase discoverability if it meets publishing guidelines.
-              </p>
+              <p className="text-sm text-gray-600 mb-2">We may display your event on our explore page to increase discoverability if it meets publishing guidelines.</p>
               <label className="inline-flex items-center space-x-2">
                 <input
                   type="checkbox"
@@ -699,26 +732,23 @@ function CreateEvent() {
                 ))}
               </div>
             </div>
-          </form>
-        </div>
-      </div>
 
-      <div className="bg-white py-4 px-8 border-t border-gray-200 mt-auto">
-        <div className="max-w-4xl mx-auto flex justify-between">
-          <button
-            type="button"
-            onClick={() => window.history.back()}
-            className="px-6 py-2 border border-orange-500 rounded-md text-gray-700 hover:bg-green-600"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-green-600"
-          >
-            Create
-          </button>
+            <div className="col-span-2 flex justify-between pt-4">
+              <button
+                type="button"
+                onClick={() => window.history.back()}
+                className="px-6 py-2 border border-orange-500 rounded-md text-gray-700 hover:bg-green-600"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-6 py-2 bg-orange-500 text-white rounded-md hover:bg-green-600"
+              >
+                Create
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
