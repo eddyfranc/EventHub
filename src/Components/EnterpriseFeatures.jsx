@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const stats = [
-  { label: "EventHub Organisers", value: "1K+" },
-  { label: "Total Ticket Sales", value: "2K+" },
-  { label: "Requests per Minute", value: "4K+" },
+  { label: "EventHub Organisers", value: "10+" },
+  // { label: "Total Ticket Sales", value: "2K+" },
+  { label: "Requests per Minute", value: "1K+" },
 ];
 
 const features = [

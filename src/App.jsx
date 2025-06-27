@@ -13,6 +13,7 @@ import EnterpriseFeatures from "./Components/EnterpriseFeatures";
 import ContactPage from "./Components/Contactpage";
 import Exploreevents from "./Components/Exploreevents";
 import UserProfilePage from "./Components/UserProfilePage";
+import AdminLogin from "./Components/AdminLogin";
 
 // Wrapper component to use useLocation
 function AppWrapper() {
@@ -38,7 +39,7 @@ function AppWrapper() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/explore" element={<Exploreevents />} />
         <Route path="/user" element={<UserProfilePage />} />
-
+        <Route path="/adminlogin" element={<AdminLogin />} />
       </Routes>
     </>
   );

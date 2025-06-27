@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown, Calendar, ArrowUpRight, Menu, X } from "lucide-react";
+import {Calendar, ArrowUpRight, Menu, X } from "lucide-react";
 import Event from "@mui/icons-material/Event";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
@@ -51,14 +51,27 @@ function MainNav() {
       <div className="flex items-center justify-between px-4 py-3 md:px-6">
         {/* Left Side: Logo + Links */}
         <div className="flex items-center gap-6">
-          <Link to="/" className="flex items-center text-xl font-bold text-orange-500">
+          <Link
+            to="/"
+            className="flex items-center text-xl font-bold text-orange-500"
+          >
             <Event className="text-2xl" />
             <span className="ml-1 text-sm text-black">EVENTHUB</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-4">
-            <Link to="/features" className="text-sm font-medium hover:text-green-700">Features</Link>
-            <Link to="/explore" className="text-sm font-semibold hover:text-green-700">Explore Events</Link>
+            <Link
+              to="/features"
+              className="text-sm font-medium hover:text-green-700"
+            >
+              Features
+            </Link>
+            <Link
+              to="/explore"
+              className="text-sm font-semibold hover:text-green-700"
+            >
+              Explore Events
+            </Link>
           </div>
         </div>
 
@@ -74,7 +87,9 @@ function MainNav() {
             />
             {isSearchFocused && (
               <div className="absolute top-full left-0 w-full bg-white border border-gray-200 shadow-lg rounded-b-md mt-1 z-40">
-                <div className="px-4 py-2 font-semibold text-gray-700 border-b">Trending Searches</div>
+                <div className="px-4 py-2 font-semibold text-gray-700 border-b">
+                  Popular events
+                </div>
                 <ul className="py-2">
                   {trendingSearches.map((item, index) => (
                     <li
@@ -97,13 +112,14 @@ function MainNav() {
           >
             {user ? (
               <>
-                <span className="hidden sm:inline text-sm mr-2 text-gray-700">{user.email}</span>
+                <span className="hidden sm:inline text-sm mr-2 text-gray-700">
+                  {user.email}
+                </span>
                 Sign out
               </>
             ) : (
               "Greetings! Sign in"
             )}
-            <ChevronDown className="w-4 h-4 ml-1" />
           </button>
 
           {/* Create Event */}
@@ -122,7 +138,11 @@ function MainNav() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="text-gray-800 focus:outline-none"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
       </div>
@@ -130,8 +150,18 @@ function MainNav() {
       {/* Mobile Dropdown */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white px-4 pb-4 pt-2 border-t shadow-sm space-y-3">
-          <Link to="/features" className="block text-sm font-medium text-gray-700 hover:text-green-700">Features</Link>
-          <Link to="/explore" className="block text-sm font-semibold text-gray-700 hover:text-green-700">Explore Events</Link>
+          <Link
+            to="/features"
+            className="block text-sm font-medium text-gray-700 hover:text-green-700"
+          >
+            Features
+          </Link>
+          <Link
+            to="/explore"
+            className="block text-sm font-semibold text-gray-700 hover:text-green-700"
+          >
+            Explore Events
+          </Link>
 
           <div className="w-full" ref={searchRef}>
             <input

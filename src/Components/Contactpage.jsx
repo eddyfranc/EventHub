@@ -1,7 +1,4 @@
-// ContactPage.jsx
-import React from "react";
-
-export default function ContactPage() {
+function ContactPage() {
   return (
     <section className="min-h-screen px-6 py-16 md:px-20 bg-white text-gray-800">
       <div className="max-w-4xl mx-auto">
@@ -12,8 +9,7 @@ export default function ContactPage() {
           <h2 className="text-xl font-semibold mb-4">Contact Information</h2>
           <ul className="space-y-2 text-gray-700">
             <li><strong>Phone:</strong> +2547 620 190</li>
-            <li><strong>Email:</strong> contact@eventhub.com</li>
-            <li><strong>Help Center:</strong> <a href="#" className="text-teal-600 hover:underline">Visit Here</a></li>
+            <li><strong>Email:</strong> eddy@eventhub.com</li>
           </ul>
         </div>
 
@@ -21,7 +17,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <input
               type="text"
-              placeholder="First Name*"
+              placeholder="First Name"
               className="border rounded-md px-4 py-2 w-full"
               required
             />
@@ -65,3 +61,4 @@ export default function ContactPage() {
     </section>
   );
 }
+export default ContactPage;

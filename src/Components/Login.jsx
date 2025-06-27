@@ -11,7 +11,11 @@ function Login() {
   const modalRef = useRef(null);
   const [isNewUser, setIsNewUser] = useState(false);
   const [isFading, setIsFading] = useState(false);
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    userType: "user", // added userType
+  });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -54,7 +58,19 @@ function Login() {
           formData.password
         );
         setSuccess("Logged in successfully! Redirecting...");
-        setTimeout(() => navigate("/"), 1500);
+
+        setTimeout(() => {
+          if (formData.userType === "admin") {
+            // Check if email matches admin criteria
+            if (formData.email === "admin@eventhub.com") {
+              navigate("/admindashboard");
+            } else {
+              setError("Access denied. Not an admin account.");
+            }
+          } else {
+            navigate("/");
+          }
+        }, 1500);
       }
     } catch (err) {
       if (err.code === "auth/user-not-found") {
@@ -71,10 +87,7 @@ function Login() {
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center"
-      style={{ backgroundImage: "url('/Images/background signup.png')" }}
-    >
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
       <div
         ref={modalRef}
         className={`bg-white rounded-2xl shadow-lg p-8 w-full max-w-md transition-all duration-500 ease-in-out ${
@@ -111,6 +124,18 @@ function Login() {
             required
           />
 
+          {/* User Type Selector to Select wheteher is a User or Admin */}
+          <select
+            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600"
+            value={formData.userType}
+            onChange={(e) =>
+              setFormData({ ...formData, userType: e.target.value })
+            }
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+
           <button
             type="submit"
             className="w-full bg-orange-500 hover:bg-green-600 text-white font-semibold py-3 rounded-md transition duration-300"
@@ -118,7 +143,6 @@ function Login() {
             {isNewUser ? "Sign Up" : "Login"}
           </button>
 
-          {/* Success message below button */}
           {success && (
             <div className="mt-3 text-green-600 text-sm text-center">
               {success}
@@ -135,9 +159,7 @@ function Login() {
             }}
             className="text-orange-500 hover:underline font-medium"
           >
-            {isNewUser
-              ? "Already have an account? Login"
-              : "New user? Sign up"}
+            {isNewUser ? "Already have an account? Login" : "New user? Sign up"}
           </button>
         </div>
       </div>
