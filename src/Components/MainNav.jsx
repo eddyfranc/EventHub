@@ -123,13 +123,25 @@ function MainNav() {
           </button>
 
           {/* Create Event */}
-          <Link
-            to="/create"
-            className="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center hover:bg-green-600 text-sm"
-          >
-            <Calendar className="w-4 h-4 mr-2" />
-            Create Event
-          </Link>
+          {user ? (
+            <Link
+              to="/create"
+              className="bg-orange-500 text-white px-4 py-2 rounded-md flex items-center hover:bg-green-600 text-sm"
+            >
+              <Calendar className="w-4 h-4 mr-2" />
+              Create Event
+            </Link>
+          ) : (
+            <button
+              onClick={() => window.location.href = "/login"}
+              className="bg-gray-300 text-gray-500 px-4 py-2 rounded-md flex items-center cursor-not-allowed text-sm"
+              disabled
+              title="Please sign in to create an event"
+            >
+              <Calendar className="w-4 h-4 mr-2" />
+              Create Event
+            </button>
+          )}
         </div>
 
         {/* Hamburger Button */}

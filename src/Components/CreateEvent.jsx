@@ -10,9 +10,12 @@ function CreateEvent() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
+      if (!user) {
+        navigate("/login");
+      }
     });
     return () => unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const [eventData, setEventData] = useState({
     name: "",
@@ -247,7 +250,8 @@ function CreateEvent() {
               </select>
             </div>
 
-            <div>
+            {/* Ticket Price */}
+            <div className="col-span-2">
               <label className="block font-semibold mb-1">Currency</label>
               <input type="text" name="currency" value={eventData.currency} onChange={handleChange} placeholder="e.g. Ksh." className="w-full border p-3 rounded" />
             </div>

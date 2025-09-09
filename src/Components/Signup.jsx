@@ -23,6 +23,9 @@ function SignUp() {
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
       <h2 className="text-xl font-semibold mb-4">Sign Up</h2>
       {error && <p className="text-red-500 mb-2">{error}</p>}
+      <div className="flex flex-col items-center mb-6">
+        <img src={require("../public/Images/EventLogo.png")} alt="EventHub Logo" className="h-20 w-20 mb-2 object-contain" />
+      </div>
       <form onSubmit={handleSignUp}>
         <input
           type="email"

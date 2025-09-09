@@ -298,16 +298,7 @@ function Home() {
 
       {/* Footer Marquee */}
       <footer className="sticky bottom-0 z-40">
-        <Marquee
-          gradient={false}
-          speed={60}
-          className="bg-green-700 text-white py-3 text-sm font-medium shadow-lg"
-        >
-          🚀 New: Real-time analytics dashboard coming soon | 🎟️ Your go to go
-          platform | 🤖 AI-driven event promotion tools available coming soon |
-          💬 24/7 Community chatrooms for hosts | ✨ Optimized for mobile
-          experience
-        </Marquee>
+      
       </footer>
     </div>
   );
