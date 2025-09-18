@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword,} from "firebase/auth";
 import { auth } from "../firebase";
 
 function Login() {
@@ -95,7 +92,7 @@ function Login() {
         }`}
       >
         <div className="flex flex-col items-center mb-6">
-          <img src={require("../public/Images/EventLogo.png")} alt="EventHub Logo" className="h-20 w-20 mb-2 object-contain" />
+          
         </div>
         <h2 className="text-3xl font-bold text-center mb-6 text-orange-500">
           {isNewUser ? "Sign Up" : "Login"}
